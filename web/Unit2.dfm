@@ -118,7 +118,6 @@ object frmprodutos: Tfrmprodutos
     StyleRenderOptions.RenderBorder = False
     FriendlyName = 'txtbuscar'
     SubmitOnAsyncEvent = True
-    Text = 'Quantidade'
   end
   object CBFORNECEDOR: TIWComboBox
     Left = 385

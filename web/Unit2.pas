@@ -36,6 +36,7 @@ type
     procedure IWTemplateProcessorHTML1UnknownTag(const AName: string;
       var VValue: string);
     procedure  AssociarCampos;
+    procedure carregarCombobox;
     procedure BtnNovoAsyncClick(Sender: TObject; EventParams: TStringList);
   public
   end;
@@ -56,9 +57,24 @@ procedure Tfrmprodutos.AssociarCampos;
 procedure Tfrmprodutos.BtnNovoAsyncClick(Sender: TObject;
   EventParams: TStringList);
   begin
+    carregarCombobox;
     query_pro.Insert;
     webapplication.CallBackResponse.AddJavaScriptToExecute('$ (''#EditaDados'').modal(''show'');');
 
+  end;
+
+procedure Tfrmprodutos.carregarCombobox;
+  begin
+    query_forn.Close;
+    query_forn.Active;
+    CBFORNECEDOR.Items.Clear;
+
+    while not query_forn.Eof do
+      Begin
+        CBFORNECEDOR.Items.AddObject(query_forn.FieldByName('nome').AsString,tobject(query_forn.FieldByName('id').asInteger));
+        query_forn.Next;
+      End;
+      CBFORNECEDOR.ItemIndex:= 0;
   end;
 
 procedure Tfrmprodutos.IWTemplateProcessorHTML1UnknownTag(const AName: string;
