@@ -1,0 +1,34 @@
+object frmprodutos: Tfrmprodutos
+  Left = 0
+  Top = 0
+  Width = 555
+  Height = 400
+  RenderInvisibleControls = True
+  AllowPageAccess = True
+  ConnectionMode = cmAny
+  Background.Fixed = False
+  LayoutMgr = IWTemplateProcessorHTML1
+  HandleTabs = False
+  LeftToRight = True
+  LockUntilLoaded = True
+  LockOnSubmit = True
+  ShowHint = True
+  DesignLeft = 2
+  DesignTop = 2
+  object BtnNovo: TIWButton
+    Left = 200
+    Top = 248
+    Width = 120
+    Height = 30
+    Css = 'btn btn-success'
+    Caption = 'Novo'
+    Color = clBtnFace
+    FriendlyName = 'BtnNovo'
+  end
+  object IWTemplateProcessorHTML1: TIWTemplateProcessorHTML
+    TagType = ttIntraWeb
+    RenderStyles = False
+    Left = 232
+    Top = 144
+  end
+end

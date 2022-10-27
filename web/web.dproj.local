@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/10/20 09:50:56.000.594,=C:\ds\352\web\web\Unit2.pas</Transaction>
+    <Transaction>2022/10/20 09:50:58.000.192,=C:\ds\352\web\web\ServerController.pas</Transaction>
+    <Transaction>2022/10/20 09:50:58.000.271,=C:\ds\352\web\web\UserSessionUnit.pas</Transaction>
+  </Transactions>
+</BorlandProject>
