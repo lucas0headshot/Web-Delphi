@@ -6,7 +6,29 @@
 	<title>Tela de Produtos</title>
 
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+
+  <script type="text/javascript" charset="utf-8">
+  
+      function pegarPosicao(id, Acao) {
+        debugger;
+       document.getElementById('TXTID').value = id;
+        AddChangedControl('TXTID');   
+
+        // verificar se é alteração ou exclusao
+        if (Acao == 'alterar')
+        {
+          BTNEDITAR.click();   
+        }
+        else if (Acao == 'excluir')
+        {
+          BTNEXCLUIR.click();   
+        }                
+      }
+      
+    </script>
 
 
 
@@ -14,6 +36,26 @@
 
 </head>
 <body>
+
+  <div class="container">
+    <div class="clearfix" style="display: none">{%TXTID%}{%BTNEDITAR%}{%BTNEXCLUIR%} </div>
+    <br><br>
+    <div class="row">
+      <div class="col-sm-8">
+        <button type="button" class="btn btn-primary mb-3" id="BTNNOVO">Inserir Novo</button>
+      </div>
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-8">
+            {%txtBuscar%}
+          </div>
+          <div class="col-sm-4">
+            {%BTNBUSCAR%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 	
 	<div class="col-sm-12">
     <table id="gridprodutos" class="table table-hover table-striped table-condensed">
@@ -38,7 +80,45 @@
   </div>
 
 
-
+<!-- Modal -->
+<div id="EditaDados" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+   <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Produtos - Edição de dados</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="id_produto">Produto</label>
+          {%txtProduto%}
+        </div>
+        <div class="form-group">
+          <label for="id_produto">Valor</label>
+          {%txtValor%}
+        </div>
+        <div class="form-group">
+          <label for="razao">Quantidade</label>
+          {%txtQuantidade%}
+        </div>
+        <div class="form-group">
+          <label for="fornecedor">Fornecedor</label>
+          {%CBFORNECEDOR%}
+        </div>
+      </div>
+      <script>
+        $('#EditaDados').on('shown.bs.modal', function () {
+            $('#txtProduto').focus();
+        });
+      </script>         
+      <div class="modal-footer">
+        {%btnSalvar%}
+        {%btnCancelar%}              
+      </div>
+    </div>
+  </div>
+</div>    
 
   
 </body>

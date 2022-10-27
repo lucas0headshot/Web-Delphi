@@ -11,7 +11,7 @@ uses
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
   FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait,
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, Data.DB,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, IWCompEdit;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, IWCompEdit, IWCompListbox;
 
 type
   Tfrmprodutos = class(TIWAppForm)
@@ -22,8 +22,21 @@ type
     query_pro: TFDQuery;
     ds_query_pro: TDataSource;
     txtbuscar: TIWEdit;
+    BtnSalvar: TIWButton;
+    btnBuscar: TIWButton;
+    btnCancelar: TIWButton;
+    btnExcluir: TIWButton;
+    btnEditar: TIWButton;
+    txtProduto: TIWEdit;
+    txtValor: TIWEdit;
+    txtId: TIWEdit;
+    txtQuantidade: TIWEdit;
+    CBFORNECEDOR: TIWComboBox;
+    query_forn: TFDQuery;
     procedure IWTemplateProcessorHTML1UnknownTag(const AName: string;
       var VValue: string);
+    procedure  AssociarCampos;
+    procedure BtnNovoAsyncClick(Sender: TObject; EventParams: TStringList);
   public
   end;
 
@@ -31,6 +44,22 @@ implementation
 
 {$R *.dfm}
 
+
+procedure Tfrmprodutos.AssociarCampos;
+  begin
+    query_pro.fieldByName('nome').Value:= txtProduto.Text;
+    query_pro.fieldByName('quantidade').Value:= txtQuantidade.Text;
+    query_pro.fieldByName('valor').Value:= txtValor.Text;
+    query_pro.fieldByName('id_fornecedor').Value:= integer(CBFORNECEDOR.Items.Objects[CBFORNECEDOR.ItemIndex]);
+  end;
+
+procedure Tfrmprodutos.BtnNovoAsyncClick(Sender: TObject;
+  EventParams: TStringList);
+  begin
+    query_pro.Insert;
+    webapplication.CallBackResponse.AddJavaScriptToExecute('$ (''#EditaDados'').modal(''show'');');
+
+  end;
 
 procedure Tfrmprodutos.IWTemplateProcessorHTML1UnknownTag(const AName: string;
   var VValue: string);
