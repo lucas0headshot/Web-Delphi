@@ -37,7 +37,14 @@ type
       var VValue: string);
     procedure  AssociarCampos;
     procedure carregarCombobox;
+    procedure limparDados;
+    procedure buscarNome;
     procedure BtnNovoAsyncClick(Sender: TObject; EventParams: TStringList);
+    procedure BtnSalvarAsyncClick(Sender: TObject; EventParams: TStringList);
+    procedure btnEditarAsyncClick(Sender: TObject; EventParams: TStringList);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnBuscarClick(Sender: TObject);
   public
   end;
 
@@ -54,6 +61,55 @@ procedure Tfrmprodutos.AssociarCampos;
     query_pro.fieldByName('id_fornecedor').Value:= integer(CBFORNECEDOR.Items.Objects[CBFORNECEDOR.ItemIndex]);
   end;
 
+procedure Tfrmprodutos.btnBuscarClick(Sender: TObject);
+begin
+  buscarNome;
+end;
+
+procedure Tfrmprodutos.btnCancelarClick(Sender: TObject);
+begin
+  limparDados;
+  webApplication.CallBackResponse.AddJavaScriptToExecute('$(''EditaDados'').modal(''show'');');
+  webApplication.CallBackResponse.AddJavaScriptToExecute('location.reload');
+end;
+
+procedure Tfrmprodutos.btnEditarAsyncClick(Sender: TObject;
+  EventParams: TStringList);
+begin
+  carregarCombobox;
+  query_pro.Locate('id', txtid.Text,[]);
+  query_pro.Edit;
+
+  if (not query_pro.FieldByName('nome').IsNull) then
+  Begin
+    txtProduto.Text:= query_pro.FieldByName('nome').Value;
+  End;
+
+  if (not query_pro.FieldByName('quantidade').IsNull) then
+  Begin
+    txtQuantidade.Text:= query_pro.FieldByName('quantidade').Value;
+  End;
+
+  if (not query_pro.FieldByName('valor').IsNull) then
+  Begin
+    txtValor.Text:= query_pro.FieldByName('valor').Value;
+  End;
+
+  if (not query_pro.FieldByName('id_fornecedor').IsNull) then
+  Begin
+    CBFORNECEDOR.Items[0]:= query_pro.FieldByName('id_fornecedor').Value;
+  End;
+
+  webApplication.CallBackResponse.AddJavaScriptToExecute('$(''EditaDados'').modal(''show'');');
+
+end;
+
+procedure Tfrmprodutos.btnExcluirClick(Sender: TObject);
+begin
+  query_pro.Locate('id', txtId.Text, []);
+  query_pro.Delete;
+end;
+
 procedure Tfrmprodutos.BtnNovoAsyncClick(Sender: TObject;
   EventParams: TStringList);
   begin
@@ -62,6 +118,47 @@ procedure Tfrmprodutos.BtnNovoAsyncClick(Sender: TObject;
     webapplication.CallBackResponse.AddJavaScriptToExecute('$ (''#EditaDados'').modal(''show'');');
 
   end;
+
+procedure Tfrmprodutos.BtnSalvarAsyncClick(Sender: TObject;
+  EventParams: TStringList);
+begin
+  if (Trim (txtProduto.Text) = '') then
+    Begin
+      webApplication.ShowMessage('Preencha o campo nome!');
+      txtProduto.SetFocus;
+      exit;
+    End;
+
+    if (Trim (txtQuantidade.Text) = '') then
+    Begin
+      webApplication.ShowMessage('Preencha o campo quantidade!');
+      txtQuantidade.SetFocus;
+      exit;
+    End;
+
+    if (Trim (txtValor.Text) = '') then
+    Begin
+      webApplication.ShowMessage('Preencha o campo valor!');
+      txtValor.SetFocus;
+      exit;
+    End;
+
+    AssociarCampos;
+    Query_pro.Post;
+    query_pro.Insert;
+    webApplication.CallBackResponse.AddJavaScriptToExecute('$(''EditaDados'').modal(''hide'');');
+    webApplication.CallBackResponse.AddJavaScriptToExecute('location.reload');
+end;
+
+procedure Tfrmprodutos.buscarNome;
+begin
+  query_pro.Close;
+  query_pro.SQL.Clear;
+  query_pro.SQL.Add('Select p.id, p.nome, p.valor, p.quantidade, pi.id_fornecedor, f.id, f.nome as id_fornecedor From produtos as p Inner Join fornecedores as f on p.id_fornecedor = f.id Order By p.nome asc');
+  //query_pro.ParamByName('nome').Value := txtBuscar.Text + '%';
+  query_pro.Open();
+  query_pro.First;
+end;
 
 procedure Tfrmprodutos.carregarCombobox;
   begin
@@ -111,6 +208,13 @@ begin
 
 
 
+end;
+
+procedure Tfrmprodutos.limparDados;
+begin
+  txtProduto.Text:= '';
+  txtValor.Text:= '';
+  txtQuantidade.Text:= '';
 end;
 
 initialization

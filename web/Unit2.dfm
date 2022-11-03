@@ -43,6 +43,7 @@ object frmprodutos: Tfrmprodutos
     Caption = 'Salvar'
     Color = clBtnFace
     FriendlyName = 'btnSalvar'
+    OnAsyncClick = BtnSalvarAsyncClick
   end
   object btnBuscar: TIWButton
     Left = 671
@@ -52,6 +53,7 @@ object frmprodutos: Tfrmprodutos
     Caption = 'Buscar'
     Color = clBtnFace
     FriendlyName = 'BtnSalvar'
+    OnClick = btnBuscarClick
   end
   object btnCancelar: TIWButton
     Left = 671
@@ -61,6 +63,7 @@ object frmprodutos: Tfrmprodutos
     Caption = 'Cancelar'
     Color = clBtnFace
     FriendlyName = 'BtnSalvar'
+    OnClick = btnCancelarClick
   end
   object btnExcluir: TIWButton
     Left = 671
@@ -70,6 +73,7 @@ object frmprodutos: Tfrmprodutos
     Caption = 'Excluir'
     Color = clBtnFace
     FriendlyName = 'BtnSalvar'
+    OnClick = btnExcluirClick
   end
   object btnEditar: TIWButton
     Left = 545
@@ -79,6 +83,7 @@ object frmprodutos: Tfrmprodutos
     Caption = 'Editar'
     Color = clBtnFace
     FriendlyName = 'BtnSalvar'
+    OnAsyncClick = btnEditarAsyncClick
   end
   object txtProduto: TIWEdit
     Left = 591
@@ -88,7 +93,6 @@ object frmprodutos: Tfrmprodutos
     StyleRenderOptions.RenderBorder = False
     FriendlyName = 'txtbuscar'
     SubmitOnAsyncEvent = True
-    Text = 'Produto'
   end
   object txtValor: TIWEdit
     Left = 591
@@ -98,7 +102,6 @@ object frmprodutos: Tfrmprodutos
     StyleRenderOptions.RenderBorder = False
     FriendlyName = 'txtbuscar'
     SubmitOnAsyncEvent = True
-    Text = 'Valor'
   end
   object txtId: TIWEdit
     Left = 591
@@ -108,7 +111,6 @@ object frmprodutos: Tfrmprodutos
     StyleRenderOptions.RenderBorder = False
     FriendlyName = 'txtbuscar'
     SubmitOnAsyncEvent = True
-    Text = 'Id'
   end
   object txtQuantidade: TIWEdit
     Left = 385
@@ -147,8 +149,8 @@ object frmprodutos: Tfrmprodutos
   end
   object driver: TFDPhysMySQLDriverLink
     VendorLib = 
-      'C:\3-52\Marcos e Lucas Ronchi\IntraWeb\Web-Delphi\web\libmySQL.d' +
-      'll'
+      'C:\3-52\Marcos e Lucas Ronchi\IntraWeb\Web-Delphi2\web\libmySQL.' +
+      'dll'
     Left = 96
     Top = 264
   end
